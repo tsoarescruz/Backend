@@ -1,0 +1,4 @@
+Django
+gunicorn
+djangorestframework
+django-rest-swagger
