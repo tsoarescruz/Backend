@@ -1,16 +1,15 @@
 ## This Project is a Rest API Backend
 
-##App
+## App
 
-For start a project
+For start a project, follow the Django documentation in this domain:
 
-Follow the Django documentation in this domain:
 https://docs.djangoproject.com/en/3.0/intro/tutorial01/
 
 Command:
 
 ```
-django-admin startproject mysite
+django-admin startproject BackendMundoGlobo
 ```
 
 How to create a virtualenv
@@ -19,13 +18,11 @@ How to create a virtualenv
 
 ```
 pip install virtualenvwrapper
-
 ```
 2 - Create and activate virtualenv RUN:
 
 ```
  /bin/bash -l -c "export WORKON_HOME=$HOME/.virtualenvs && export PROJECT_HOME=$HOME/Devel && source /usr/local/bin/virtualenvwrapper.sh && mkvirtualenv backendmundoglobo && workon backendmundoglobo"
-
 ```
 
 ## Docker
