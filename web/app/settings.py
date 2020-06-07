@@ -97,6 +97,49 @@ CACHES = {
     }
 }
 
+# Auth
+
+# AUTH_USER_MODEL = 'accounts.User'
+
+# LOGIN_URL = '/'
+
+# LOGOUT_URL = '/vod/auth/logout/'
+
+# LOGIN_REDIRECT_URL = '/'
+
+# # Tests
+
+# TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+# rest_framework
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework.authentication.TokenAuthentication',
+#         'rest_framework.authentication.BasicAuthentication',
+#         'rest_framework.authentication.SessionAuthentication',
+#     ),
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.DjangoModelPermissions',
+#     ),
+#     'DEFAULT_FILTER_BACKENDS': (
+#         'rest_framework.filters.DjangoFilterBackend',
+#     ),
+#     'DEFAULT_RENDERER_CLASSES': (
+#         'rest_framework.renderers.JSONRenderer',
+#         'rest_framework.renderers.BrowsableAPIRenderer',
+#     ),
+#     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
+#     'PAGINATE_BY': 50,
+#     'MAX_PAGINATE_BY': 300,
+#     'PAGINATE_BY_PARAM': 'page_size',
+# }
+
+# LANGUAGES = [
+#     ('pt-br', 'Portugues'),
+# ]
+
+
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 

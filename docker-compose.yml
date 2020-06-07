@@ -15,17 +15,18 @@ services:
     env_file: .env
     # environment:
       # DEBUG: 'true' 
-    command: /usr/local/bin/gunicorn app.wsgi.application -w 2 -b :8000
+    # command: /usr/local/bin/gunicorn app.wsgi.application -w 2 -b :8000
+    command: /bin/bash -c "cd ./web && ./manage.py runserver"
 
   # nginx:
   #   restart: always
   #   build: ./nginx/
   #   ports:
   #     - "80:80"
-  #   volumes:
-  #     - web-static:/www/static
-  #   links:
-  #     - web:web
+    # volumes:
+      # - web-static:/www/static
+    # links:
+      # - web:web
 
 #   postgres:
 #     restart: always

@@ -1,7 +1,12 @@
 FROM phusion/baseimage
 
 #Install system libs necessaries
-RUN apt-get update -qq && apt-get install vim git -qq
+RUN apt-get update -y && apt-get install -y vim git build-essential \
+    libpq-dev libmysqlclient-dev ca-certificates curl tzdata\
+    libssl-dev apt-utils nodejs openssh-server openssh-client && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
+
 
 #Activate Python
 FROM python:3.7-slim
@@ -9,34 +14,28 @@ FROM python:3.7-slim
 #Upgrade Pip
 RUN python3 -m pip install --upgrade pip
 
-#install virtualenv
-RUN pip install virtualenvwrapper
+WORKDIR ./usr/src/app/
 
-#Create and activate virtualenv
-RUN /bin/bash -l -c "export WORKON_HOME=$HOME/.virtualenvs && export PROJECT_HOME=$HOME/Devel && source /usr/local/bin/virtualenvwrapper.sh && mkvirtualenv backendmundoglobo && workon backendmundoglobo"
+#Copy and Install Requirements
+COPY requirements.txt .
 
-#RUN python3 -m pip install Django
+RUN python3 -m pip install --no-cache-dir -r requirements.txt
 
-#Copy and Install Requiremts
+#Insert app to /usr/src/app/
+ADD . .
 
-COPY requirements.txt requirements.txt
-
-RUN python3 -m pip install -r requirements.txt
-
-#Activate web dir
-WORKDIR web 
-
-#Start django-admin project
-RUN django-admin startproject app
-
-#ADD . ./app
-
-#Expose local port 
-EXPOSE 8000
+#RUN useradd -u 1000 -m -s /bin/bash app
+#RUN chown -R app:app .
 
 
-#RUN /bin/bash -l -c "export WORKON_HOME=$HOME/.virtualenvs "
-#RUN /bin/bash -l -c "export PROJECT_HOME=$HOME/Devel"
-#RUN /bin/bash -l -c "source /usr/local/bin/virtualenvwrapper.sh"
-#RUN /bin/bash -l -c "mkvirtualenv backendmundoglobo"
-#RUN /bin/bash -l -c "workon backendmundoglobo"
+# Create user and group
+RUN groupadd --gid 9999 app && \
+    useradd --uid 9999 --gid app app  && \
+    chown -R app:app /usr/src/app/
+
+USER app
+
+#Expose app port
+EXPOSE 80 443 8000
+
+CMD /bin/bash
