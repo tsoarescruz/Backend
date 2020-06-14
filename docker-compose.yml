@@ -1,14 +1,15 @@
-
 version: '3'
 
 services:
   web:
     restart: always
+    container_name: webapp
     build: .
     expose:
       - "8000"
     links:
       - redis:redis
+      - nginx:nginx
     volumes:
       - web:/usr/src/app
       # - web-static:/usr/src/app/static
@@ -18,34 +19,47 @@ services:
     # command: /usr/local/bin/gunicorn app.wsgi.application -w 2 -b :8000
     command: /bin/bash -c "cd ./web && ./manage.py runserver"
 
-  # nginx:
-  #   restart: always
-  #   build: ./nginx/
-  #   ports:
-  #     - "80:80"
-    # volumes:
-      # - web-static:/www/static
-    # links:
-      # - web:web
-
-#   postgres:
-#     restart: always
-#     image: postgres:latest
-#     ports:
-#       - "5432:5432"
-#     volumes:
-#       - pgdata:/var/lib/postgresql/data/
+  nginx:
+    image: nginx:latest
+    container_name: webserver
+    restart: unless-stopped
+    tty: true
+    command: [nginx-debug, '-g', 'daemon off;']
+    volumes:
+      # - ./nginx/:/etc/nginx/
+      - ./nginx/:/etc/nginx/conf.d/
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - NGINX_HOST=api-mundo-backendmundoglobo.com.br
+      - NGINX_PORT=80
 
   redis:
     restart: always
     image: redis:latest
+    container_name: db
     ports:
       - "6379:6379"
     volumes:
       - redisdata:/data
 
+  ui:
+    image: portainer/portainer
+    restart: always
+    container_name: ui
+    volumes:
+        - '/var/run/docker.sock:/var/run/docker.sock'
+    expose:
+        - 9000
+    ports:
+        - 3002:9000
+
 volumes:
   web:
+    # driver: local
   web-static:
-  # pgdata:
+    # driver: local
   redisdata:
+    # driver: local
+

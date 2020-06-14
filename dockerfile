@@ -14,6 +14,8 @@ FROM python:3.7-slim
 #Upgrade Pip
 RUN python3 -m pip install --upgrade pip
 
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+
 WORKDIR ./usr/src/app/
 
 #Copy and Install Requirements
@@ -23,10 +25,6 @@ RUN python3 -m pip install --no-cache-dir -r requirements.txt
 
 #Insert app to /usr/src/app/
 ADD . .
-
-#RUN useradd -u 1000 -m -s /bin/bash app
-#RUN chown -R app:app .
-
 
 # Create user and group
 RUN groupadd --gid 9999 app && \
