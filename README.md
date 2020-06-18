@@ -30,7 +30,29 @@ pip install virtualenvwrapper
 * For build and run the docker environment
 
 ```python
-
 docker-compose up --build
+```
 
+## Portainer
+
+This service is to monitoring Docker container
+
+
+How to access:
+
+```
+http://localhost:3002/
+```
+
+
+## NetData
+
+
+This service is to monitoring Environment data and application data.
+
+
+How to access:
+
+```
+http://localhost:19999/
 ```
