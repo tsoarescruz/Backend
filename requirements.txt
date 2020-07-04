@@ -6,6 +6,7 @@ requests
 simplejson
 lxml
 python-dateutil
+pytest
 
 #mysql-python
 python-memcached
