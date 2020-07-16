@@ -1,20 +1,39 @@
 FROM phusion/baseimage
 
 #Install system libs necessaries
-RUN apt-get update -y && apt-get install -y vim git build-essential \
-    libpq-dev libmysqlclient-dev ca-certificates curl tzdata\
-    libssl-dev apt-utils nodejs openssh-server openssh-client && \
-    apt-get autoremove -y && \
-    rm -rf /var/lib/apt/lists/*
 
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+RUN apt-get update && apt-get install -y \
+                vim \
+                git \
+                build-essential \
+                gcc \
+                libpq-dev \
+                libmysqlclient-dev \
+                libssl-dev \
+                mysql-client libmysqlclient-dev \
+                postgresql-client libpq-dev \
+                python-dev python-pip \
+                zlib1g-dev \
+                lib32z1-dev libxslt-dev \
+                libxml2-dev \
+                ca-certificates \
+                curl \
+                tzdata\
+    			libssl-dev \
+    			apt-utils \
+    			openssh-server \ 
+    			openssh-client && \
+                apt-get autoremove -y && \
+                rm -rf /var/lib/apt/lists/* 
 
 #Activate Python
 FROM python:3.7-slim
 
 #Upgrade Pip
 RUN python3 -m pip install --upgrade pip
-
-COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 
 WORKDIR ./usr/src/app/
 
